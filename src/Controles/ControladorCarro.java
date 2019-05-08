@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Entidades.Carro;
-import dao.RepositorioCarro;
 
 public class ControladorCarro {
 	private static ControladorCarro controler;
@@ -21,10 +20,16 @@ public class ControladorCarro {
 	}
 	
 	public boolean addCarro(String modelo, String placa, String cor, int ano, double precoAluguel) {
-		if(modelo ==  null || modelo.equals(""))  return false ; // vi na internet n�o sei como funciona qqr coisa tira 
+		if(modelo ==  null || modelo.equals(""))  return false ; 
+		if(!(modelo.substring(0, 3).matches("[A-Z a-z]*")) )return false;
 		if(placa ==  null)  return false;
+		if(placa.equals("")) return false;
+		if(!(placa.substring(0, 3).matches("[A-Z a-z]*")) )return false;
+		if(placa.equals("")) return false;
 		if(cor ==  null)  return false;
-		if(ano > 2019) return false; // tem que melhorar isso aqui 
+		if(cor.equals("")) return false;
+		if(!(cor.substring(0, 3).matches("[A-Z a-z]*")) )return false;
+		if(ano > 2019 || ano < 1880) return false; // tem que melhorar isso aqui 
 		if(precoAluguel <= 0) return false;
 		
 		Carro carro = new Carro(modelo, placa, cor, ano, precoAluguel);
@@ -41,6 +46,7 @@ public class ControladorCarro {
 	}
 	
 	public boolean editarPrecoCarro(String placa, double novoPreco) {
+		if(novoPreco < 0) return false;
 		if(RepositorioCarro.getInstance().editarPrecoCarro(placa, novoPreco)){
 			return true;
 		}

@@ -542,7 +542,7 @@ class SuiteDeTestes {
 	//devolucao de carro
 	@Test
 	public void devolverCarroValido() {
-		alugarCarroValido();
+
 		boolean retorno = ControladorCarro.getInstance().devolverCarro("hxa1234");
 		assertEquals(true, retorno);
 		Carro c = ControladorCarro.getInstance().buscarCarro("hxa1234");
@@ -550,3 +550,11 @@ class SuiteDeTestes {
 	}
 	
 }
+
+
+
+
+
+
+
+
