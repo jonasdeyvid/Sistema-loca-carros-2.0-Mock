@@ -7,14 +7,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import Entidades.Carro;
 import Entidades.Cliente;
 
 public class RepositorioCliente {
 	private static RepositorioCliente repositorio;
 	private List<Cliente> clientes;
+	protected EntityManager entityManager;
 	
 	private RepositorioCliente() {
 		clientes = new ArrayList<Cliente>();
+		entityManager = getEntityManager();
 	}
 	
 	public static RepositorioCliente getInstance() {
@@ -24,56 +27,67 @@ public class RepositorioCliente {
 		return repositorio;
 	}
 	
+	private EntityManager getEntityManager() {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("crud-hibernate");
+		if (entityManager == null) {
+			entityManager = factory.createEntityManager();
+		}
+
+		return entityManager;
+	}
 	
 	public boolean addCliente(Cliente client) {
-		for (Cliente cliente : clientes) {
-			if(cliente.getCpf().equals(client.getCpf())) {
+			if(buscarCliente(client.getCpf()) != null) {
 				return false;
 			}
-		}
+		
 		clientes.add(client);
 		//bloco pro hibernate
-		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("crud-hibernate");
-		EntityManager manager = fabrica.createEntityManager();
-		manager.getTransaction().begin();
-		manager.persist(client);
-		manager.getTransaction().commit();
-		fabrica.close();
-		manager.close();
+		entityManager.getTransaction().begin();
+		entityManager.persist(client);
+		entityManager.getTransaction().commit();
 		return true;
 
 	}
 	
 	public boolean removerCliente(String cpf) {
-		for (Cliente cliente : clientes) {
-			if(cliente.getCpf().equals(cpf)) {
-				clientes.remove(cliente);
-				return true;
-			}
+		Cliente cliente = buscarCliente(cpf);
+		if (cliente == null) {
+			return false;
 		}
-		return false;
+		entityManager.getTransaction().begin();
+		entityManager.remove(cliente);
+		entityManager.getTransaction().commit();
+		return true;
 	}
 	
 	public boolean editarCliente(String cpf , String novoEndereco) {
-		for (Cliente cliente : clientes) {
-			if(cliente.getCpf().equals(cpf)) {
-				cliente.setEndereco(novoEndereco);
-				return true;
-			}
+		Cliente cliente = buscarCliente(cpf);
+		if(cliente == null) {
+			return false;
 		}
-		return false;
+		cliente.setEndereco(novoEndereco);
+		entityManager.getTransaction().begin();
+		entityManager.merge(cliente);
+		entityManager.getTransaction().commit();
+		return true;
 	}
 	
 	public Cliente buscarCliente(String cpf) {
-		for (Cliente cliente : clientes) {
-			if(cliente.getCpf().equals(cpf)) {
+		Cliente cliente = null;
+		ArrayList<Cliente> clientesBD = new ArrayList<Cliente>(getClientes());
+		for (Cliente c : clientesBD) {
+			if(c.getCpf().equals(cpf)) {
+				cliente = c;
 				return cliente;
 			}
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Cliente> getClientes() {
-		return clientes;
+		return entityManager.createQuery("FROM " + Cliente.class.getName()).getResultList();
 	}
 	
 }
