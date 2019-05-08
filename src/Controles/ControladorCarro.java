@@ -59,11 +59,12 @@ public class ControladorCarro {
 		return RepositorioCarro.getInstance().carrosDisponiveis();
 	}
 	public boolean alugarCarro(String placa) {
-		for (Carro carro : RepositorioCarro.getInstance().carrosDisponiveis()) {
-			if(carro.getPlaca().equals(placa)) {
+		Carro carro = RepositorioCarro.getInstance().buscarCarro(placa);
+			if(carro != null && carro.isAlugado() == false){
 				carro.setAlugado(true);
+				RepositorioCarro.getInstance().setCarroAlugado(carro);
 				return true;
-			}
+			
 		}
 		return false;
 	}

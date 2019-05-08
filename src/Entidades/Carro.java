@@ -11,9 +11,11 @@ public class Carro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	private String modelo;
+	
 	@Column(unique = true)
 	private String placa ;
+	
+	private String modelo;
 	private String cor;
 	private int ano;
 	private double precoAluguel;
