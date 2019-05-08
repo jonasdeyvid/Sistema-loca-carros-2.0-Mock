@@ -4,6 +4,7 @@ package Controles;
 import java.util.List;
 
 import Entidades.Cliente;
+import repositorio.RepositorioCliente;
 
 public class ControladorCliente {
 	private static ControladorCliente controler = null;

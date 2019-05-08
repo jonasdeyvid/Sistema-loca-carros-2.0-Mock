@@ -1,7 +1,11 @@
-package Controles;
+package repositorio;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import Entidades.Carro;
 
@@ -22,6 +26,14 @@ public class RepositorioCarro {
 	public boolean addCarro(Carro carro) {
 		if(buscarCarro(carro.getPlaca()) == null ) {
 			carros.add(carro);
+			//bloco pro hibernate
+			EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("crud-hibernate");
+			EntityManager manager = fabrica.createEntityManager();
+			manager.getTransaction().begin();
+			manager.persist(carro);
+			manager.getTransaction().commit();
+			fabrica.close();
+			manager.close();
 			return true;
 		}
 		return  false;

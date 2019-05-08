@@ -1,9 +1,11 @@
 package Controles;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import Entidades.Carro;
+import repositorio.RepositorioCarro;
 
 public class ControladorCarro {
 	private static ControladorCarro controler;
@@ -29,7 +31,7 @@ public class ControladorCarro {
 		if(cor ==  null)  return false;
 		if(cor.equals("")) return false;
 		if(!(cor.substring(0, 3).matches("[A-Z a-z]*")) )return false;
-		if(ano > 2019 || ano < 1880) return false; // tem que melhorar isso aqui 
+		if(ano > LocalDate.now().getYear() || ano < 1880) return false; // tem que melhorar isso aqui 
 		if(precoAluguel <= 0) return false;
 		
 		Carro carro = new Carro(modelo, placa, cor, ano, precoAluguel);

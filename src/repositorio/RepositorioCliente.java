@@ -1,7 +1,11 @@
-package Controles;
+package repositorio;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import Entidades.Cliente;
 
@@ -28,6 +32,14 @@ public class RepositorioCliente {
 			}
 		}
 		clientes.add(client);
+		//bloco pro hibernate
+		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("crud-hibernate");
+		EntityManager manager = fabrica.createEntityManager();
+		manager.getTransaction().begin();
+		manager.persist(client);
+		manager.getTransaction().commit();
+		fabrica.close();
+		manager.close();
 		return true;
 
 	}
