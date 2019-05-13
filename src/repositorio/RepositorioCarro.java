@@ -1,11 +1,14 @@
 package repositorio;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import org.hibernate.Query;
 
 import Entidades.Carro;
 
@@ -58,15 +61,16 @@ public class RepositorioCarro {
 		return true;
 	}
 
-	public Carro buscarCarro(String placa) {
-		ArrayList<Carro> carros = new ArrayList<Carro>(getCarros());
-		Carro carro = null;
-		for(Carro c : carros) {
-			if(c.getPlaca().equals(placa)) {
-				carro = c;
+	public Carro buscarCarro(String placaBusca) {
+		ArrayList<Carro> cs = new ArrayList<Carro>(getCarros());
+		Carro c = null;
+		for(Carro carro : cs) {
+			if(carro.getPlaca().equals(placaBusca)) {
+				c = carro;
 			}
 		}
-				return carro;
+		
+				return c;
 	}
 
 	

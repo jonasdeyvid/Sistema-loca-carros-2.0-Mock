@@ -81,6 +81,10 @@ public class Carro {
 	public void setPrecoAluguel(double precoAluguel) {
 		this.precoAluguel = precoAluguel;
 	}
+	
+	public void setId(Long novoId) {
+		this.id = novoId;
+	}
 
 	@Override
 	public String toString() {
