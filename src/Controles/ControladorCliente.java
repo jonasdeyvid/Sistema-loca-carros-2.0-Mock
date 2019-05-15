@@ -3,12 +3,12 @@ package Controles;
 
 import java.util.List;
 
+import DAOS.ClienteDAO;
 import Entidades.Cliente;
-import repositorio.RepositorioCliente;
 
 public class ControladorCliente {
 	private static ControladorCliente controler = null;
-	
+	//private ClienteDAO clienteDAO = new ClienteDAO();
 	private ControladorCliente() {
 		
 	}
@@ -33,16 +33,19 @@ public class ControladorCliente {
 		if(!(endereco.substring(0, 3).matches("[A-Z a-z]*")) )return false;
 
 		Cliente cliente = new Cliente(nome, endereco, contato, cpf);
-		if(RepositorioCliente.getInstance().addCliente(cliente)) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		if(clienteDAO.addCliente(cliente)) {
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean removerCliente(String cpf) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+
 		if(cpf == null) return false;
 		if(cpf.length() != 11) return false;
-		if(RepositorioCliente.getInstance().removerCliente(cpf)) {
+		if(clienteDAO.removerCliente(cpf)) {
 			return true;
 		}
 		return false;
@@ -53,8 +56,9 @@ public class ControladorCliente {
 		if(endereco == null || endereco.equals("") || endereco.equals("\n")) return false;
 		if(!(endereco.substring(0, 3).matches("[A-Z a-z]*")) )return false;
 		if(cpf.length() != 11) return false;
+		ClienteDAO clienteDAO = new ClienteDAO();
 
-		if(RepositorioCliente.getInstance().editarCliente(cpf, endereco)) {
+		if(clienteDAO.editarCliente(cpf, endereco)) {
 			return true;
 		}
 		return false;
@@ -62,11 +66,15 @@ public class ControladorCliente {
 	
 	public Cliente buscarCliente(String cpf) {
 		if(cpf == null) return null;
-		Cliente cliente = RepositorioCliente.getInstance().buscarCliente(cpf);
+		ClienteDAO clienteDAO = new ClienteDAO();
+
+		Cliente cliente = clienteDAO.buscarCliente(cpf);
 		return cliente;
 	}
 	public List<Cliente> listaClientes(){
-		return RepositorioCliente.getInstance().getClientes();
+		ClienteDAO clienteDAO = new ClienteDAO();
+
+		return clienteDAO.getClientes();
 	}
 	
 	public boolean alugarCarro(String placa) {

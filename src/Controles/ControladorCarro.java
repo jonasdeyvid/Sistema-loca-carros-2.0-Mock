@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import DAOS.CarroDAO;
 import Entidades.Carro;
-import repositorio.RepositorioCarro;
 
 public class ControladorCarro {
 	private static ControladorCarro controler;
-	
+	private CarroDAO carroDAO = new CarroDAO();
 	private ControladorCarro() {
 		
 	}
@@ -35,13 +35,13 @@ public class ControladorCarro {
 		if(precoAluguel <= 0) return false;
 		
 		Carro carro = new Carro(modelo, placa, cor, ano, precoAluguel);
-		RepositorioCarro.getInstance().addCarro(carro);
+		carroDAO.addCarro(carro);
 		return true;
 	}
 	
 	public boolean removerCarro(String placa) {
 		if(placa ==  null)  throw new IllegalArgumentException("placa nao pode ser nula");
-		if(RepositorioCarro.getInstance().removerCarro(placa)) {
+		if(carroDAO.removerCarro(placa)) {
 			return true;
 		}
 		return false;
@@ -49,27 +49,27 @@ public class ControladorCarro {
 	
 	public boolean editarPrecoCarro(String placa, double novoPreco) {
 		if(novoPreco < 0) return false;
-		if(RepositorioCarro.getInstance().editarPrecoCarro(placa, novoPreco)){
+		if(carroDAO.editarPrecoCarro(placa, novoPreco)){
 			return true;
 		}
 		return false;
 	}
 	
 	public List<Carro> carrosDisponiveis(){
-		return RepositorioCarro.getInstance().carrosDisponiveis();
+		return carroDAO.carrosDisponiveis();
 	}
 	public boolean alugarCarro(String placa) {
-		Carro carro = RepositorioCarro.getInstance().buscarCarro(placa);
+		Carro carro = carroDAO.buscarCarro(placa);
 			if(carro != null && carro.isAlugado() == false){
 				carro.setAlugado(true);
-				RepositorioCarro.getInstance().setCarroAlugado(carro);
+				carroDAO.setCarroAlugado(carro);
 				return true;
 			
 		}
 		return false;
 	}
 	public boolean devolverCarro(String placa) {
-		for (Carro carro : RepositorioCarro.getInstance().getCarros()) {
+		for (Carro carro : carroDAO.getCarros()) {
 			if(carro.getPlaca().equals(placa)) {
 				if(carro.isAlugado() == true) {
 					carro.setAlugado(false);
@@ -81,11 +81,11 @@ public class ControladorCarro {
 		return false;
 	}
 	public Carro buscarCarro(String placa) {
-		return RepositorioCarro.getInstance().buscarCarro(placa);
+		return carroDAO.buscarCarro(placa);
 	}
 	
 	public List<Carro> getCarros(){
-		return RepositorioCarro.getInstance().getCarros();
+		return carroDAO.getCarros();
 	}
 	
 	

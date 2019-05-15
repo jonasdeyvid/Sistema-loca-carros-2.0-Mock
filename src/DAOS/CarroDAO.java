@@ -1,4 +1,4 @@
-package repositorio;
+package DAOS;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,13 +12,10 @@ import org.hibernate.Query;
 
 import Entidades.Carro;
 
-public class RepositorioCarro {
-	private static RepositorioCarro repositorio;
-	private List<Carro> carros;
+public class CarroDAO {
 	protected EntityManager entityManager;
 
-	private RepositorioCarro() {
-		carros = new ArrayList<Carro>();
+	public CarroDAO() {
 		entityManager = getEntityManager();
 	}
 
@@ -31,17 +28,8 @@ public class RepositorioCarro {
 		return entityManager;
 	}
 
-	public static RepositorioCarro getInstance() {
-		if (repositorio == null) {
-			return repositorio = new RepositorioCarro();
-		}
-		return repositorio;
-	}
-
 	public boolean addCarro(Carro carro) {
 		if (buscarCarro(carro.getPlaca()) == null) {
-			carros.add(carro);
-			// bloco pro hibernate
 			entityManager.getTransaction().begin();
 			entityManager.persist(carro);
 			entityManager.getTransaction().commit();
@@ -70,7 +58,7 @@ public class RepositorioCarro {
 			}
 		}
 		
-				return c;
+		return c;
 	}
 
 	
