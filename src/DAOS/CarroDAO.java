@@ -29,24 +29,41 @@ public class CarroDAO {
 	}
 
 	public boolean addCarro(Carro carro) {
-		if (buscarCarro(carro.getPlaca()) == null) {
+		if (true) {
 			entityManager.getTransaction().begin();
 			entityManager.persist(carro);
 			entityManager.getTransaction().commit();
+			entityManager.close();
 			return true;
 		}
 		return false;
 	}
+	
+	public void setEntityManager(EntityManager et) {
+		this.entityManager = et;
+	}
 
-	public boolean removerCarro(String placa) {
-		Carro carro = buscarCarro(placa);
-		if (carro == null) {
-			return false;
-		}
+	public boolean removerCarroPelaPlaca(String placa) {
+		Carro carro = new Carro();
+//		if (carro == null) {
+//			return false;
+//		}
 		entityManager.getTransaction().begin();
 		entityManager.remove(carro);
 		entityManager.getTransaction().commit();
+		entityManager.close();
 		return true;
+	}
+	
+	public boolean removerCarro(Carro c) {
+		if(c != null) {
+			entityManager.getTransaction().begin();
+			entityManager.remove(c);
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			return true;
+		}
+		return false;
 	}
 
 	public Carro buscarCarro(String placaBusca) {

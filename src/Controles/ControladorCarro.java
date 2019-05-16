@@ -41,7 +41,7 @@ public class ControladorCarro {
 	
 	public boolean removerCarro(String placa) {
 		if(placa ==  null)  throw new IllegalArgumentException("placa nao pode ser nula");
-		if(carroDAO.removerCarro(placa)) {
+		if(carroDAO.removerCarroPelaPlaca(placa)) {
 			return true;
 		}
 		return false;

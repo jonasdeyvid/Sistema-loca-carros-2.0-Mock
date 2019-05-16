@@ -5,8 +5,7 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate5.4.2"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/postgresqlJDBC"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Guilh/Desktop/Nova pasta/mockito-all-1.9.5.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Guilh/Desktop/postgresql-42.2.5 (1).jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/mockito"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
