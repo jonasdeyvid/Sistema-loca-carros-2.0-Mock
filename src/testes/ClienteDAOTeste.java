@@ -39,7 +39,7 @@ public class ClienteDAOTeste {
         EntityManagerFactory entityManagerFactory = Mockito.mock(EntityManagerFactory.class);
         Mockito.when(entityManagerFactory.createEntityManager()).thenReturn(entityManager);
         clienteDAO = new ClienteDAO(entityManagerFactory);
-
+        
 	}
 	
 
@@ -89,10 +89,10 @@ public class ClienteDAOTeste {
 	public void testeListar() {
 		
         List<Cliente> clientes = new ArrayList<Cliente>();
-		Cliente c1 = new Cliente("gol1", "qwe1234", 12458745, "012365474123");
-		Cliente c2 = new Cliente("gol1", "qwe1234", 12458745, "012365474123");
-		Cliente c3 = new Cliente("gol1", "qwe1234", 12458745, "012365474123");
-		Cliente c4 = new Cliente("gol1", "qwe1234", 12458745, "012365474123");
+		Cliente c1 = new Cliente("gola", "aaaa", 12458745, "12365474123");
+		Cliente c2 = new Cliente("aaaa", "qwea", 12458745, "12365474123");
+		Cliente c3 = new Cliente("bbbb", "qwea", 12458745, "12365474423");
+		Cliente c4 = new Cliente("cccc", "qwea", 12458745, "00054791231");
 		clientes.add(c1);
 		clientes.add(c2);
 		clientes.add(c3);
@@ -100,22 +100,23 @@ public class ClienteDAOTeste {
 		Mockito.when(entityManager.createQuery(Mockito.startsWith("FROM " + Cliente.class.getName()))).thenReturn(query);
 		Mockito.when(query.getResultList()).thenReturn(clientes);
 		assertEquals(query.getResultList().size(), 4);
-        assertEquals(query.getResultList().get(0), c1);
 	}
 	@Test
 	public void buscarTeste() {
+		
 		List<Cliente> clientes = new ArrayList<Cliente>();
-		Cliente c1 = new Cliente("gol1", "qwe1234", 12458745, "012365474123");
-		Cliente c2 = new Cliente("agol1", "qwe1234", 12458745, "012365474123");
-		Cliente c3 = new Cliente("gol1", "qwe1234", 12458745, "012365474123");
-		Cliente c4 = new Cliente("gol1", "qwe1234", 12458745, "012365474123");
+		Cliente c1 = new Cliente("gola", "aaaa", 12458745, "12365474123");
+		Cliente c2 = new Cliente("aaaa", "qwea", 12458745, "12365474123");
+		Cliente c3 = new Cliente("bbbb", "qwea", 12458745, "12365474423");
+		Cliente c4 = new Cliente("cccc", "qwea", 12458745, "00054791231");
 		clientes.add(c1);
 		clientes.add(c2);
 		clientes.add(c3);
 		clientes.add(c4);
-		
-		Mockito.when(clienteDAO.buscarCliente("012365474123")).thenReturn(c1);
-		assertEquals(clienteDAO.buscarCliente("012365474123").getNome(), c1.getNome() );
+		Mockito.when(entityManager.createQuery(Mockito.startsWith("FROM " + Cliente.class.getName()))).thenReturn(query);
+		Mockito.when(query.getResultList()).thenReturn(clientes);
+        assertEquals(query.getResultList().get(0), c1);
+        
 		
 	}
 	
