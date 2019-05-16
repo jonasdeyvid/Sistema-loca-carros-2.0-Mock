@@ -3,20 +3,27 @@ package DAOS;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUnit;
+import javax.transaction.Transactional;
+
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
 
 import Entidades.Cliente;
 
 public class ClienteDAO {
-	
+
 	protected EntityManager entityManager;
 	@PersistenceUnit
 	private EntityManagerFactory factory;
 	
+	public SessionFactory sessionFactory;
+
 	public ClienteDAO() {
 		entityManager = getEntityManager();
 	}
@@ -120,12 +127,15 @@ public class ClienteDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Cliente> getClientes() {
-		return entityManager.createQuery("FROM " + Cliente.class.getName()).getResultList();
+		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("crud-hibernate");
+		EntityManager manager = fabrica.createEntityManager();
+		return manager.createQuery("FROM " + Cliente.class.getName()).getResultList();
 	}
 	
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
+	
 	
 }
 
