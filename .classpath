@@ -8,5 +8,6 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/mockito"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Guilh/Desktop/mockito-all-1.9.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Guilh/Desktop/postgresql-42.2.5 (1).jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.transaction.Transaction;
@@ -16,7 +17,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import DAOS.CarroDAO;
+import DAOS.ClienteDAO;
 import Entidades.Carro;
+import Entidades.Cliente;
 
 class CarroDAOTeste {
 	
@@ -29,7 +32,8 @@ class CarroDAOTeste {
 	@Mock
 	Query query = Mockito.mock(Query.class);
 	
-	
+	 @Mock
+	private CarroDAO carroDAO;
 	
 	@Before
 	public void setUp() throws Exception{
@@ -39,6 +43,12 @@ class CarroDAOTeste {
 		Mockito.doNothing().when(entityManager).persist(Mockito.any(Object.class));
 		Mockito.doNothing().when(entityManager).remove(Mockito.any(Object.class));
 		Mockito.doNothing().when(entityManager).merge(Mockito.any(Object.class));
+		EntityManagerFactory entityManagerFactory = Mockito.mock(EntityManagerFactory.class);
+	    Mockito.when(entityManagerFactory.createEntityManager()).thenReturn(entityManager);
+		
+	}
+	@Test
+	public void testaListar() {
 		List<Carro> carros = new ArrayList<Carro>();
 		Carro c1 = new Carro("gol1", "qwe1234", "branco", 2010, 20);
 		Carro c2 = new Carro("gol2", "qwe1235", "branco", 2010, 20);
@@ -52,9 +62,9 @@ class CarroDAOTeste {
 		carros.add(c5);
 		Mockito.when(entityManager.createQuery(Mockito.startsWith("FROM " + Carro.class.getName()))).thenReturn(query);
 		Mockito.when(query.getResultList()).thenReturn(carros);
-		
+		assertEquals(query.getResultList().size(), 5);
+        assertEquals(query.getResultList().get(0), c1);
 	}
-	
 	
 	
 	@Test

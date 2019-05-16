@@ -44,7 +44,7 @@ public class ClienteDAOTeste {
 	
 
 	@Test
-    public void addCliente() {
+    public void addClienteTeste() {
         EntityTransaction transaction = Mockito.mock(EntityTransaction.class);
         Mockito.when(entityManager.getTransaction()).thenReturn(transaction);
 
@@ -57,7 +57,7 @@ public class ClienteDAOTeste {
     }
 	
 	@Test
-	public void removerCliente() {
+	public void removerClienteTeste() {
 		EntityTransaction transaction = Mockito.mock(EntityTransaction.class);
         Mockito.when(entityManager.getTransaction()).thenReturn(transaction);
 
@@ -71,7 +71,7 @@ public class ClienteDAOTeste {
 	}
 	
 	@Test
-	public void editarCliente() {
+	public void editarClienteTeste() {
 		EntityTransaction transaction = Mockito.mock(EntityTransaction.class);
         Mockito.when(entityManager.getTransaction()).thenReturn(transaction);
        // Cliente cliente = new Cliente("Gui", "ararar", 12345678, "06115974388");
@@ -97,10 +97,26 @@ public class ClienteDAOTeste {
 		clientes.add(c2);
 		clientes.add(c3);
 		clientes.add(c4);
-		Mockito.when(entityManager.createQuery(Mockito.startsWith("FROM " + Carro.class.getName()))).thenReturn(query);
+		Mockito.when(entityManager.createQuery(Mockito.startsWith("FROM " + Cliente.class.getName()))).thenReturn(query);
 		Mockito.when(query.getResultList()).thenReturn(clientes);
 		assertEquals(query.getResultList().size(), 4);
         assertEquals(query.getResultList().get(0), c1);
+	}
+	@Test
+	public void buscarTeste() {
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		Cliente c1 = new Cliente("gol1", "qwe1234", 12458745, "012365474123");
+		Cliente c2 = new Cliente("agol1", "qwe1234", 12458745, "012365474123");
+		Cliente c3 = new Cliente("gol1", "qwe1234", 12458745, "012365474123");
+		Cliente c4 = new Cliente("gol1", "qwe1234", 12458745, "012365474123");
+		clientes.add(c1);
+		clientes.add(c2);
+		clientes.add(c3);
+		clientes.add(c4);
+		
+		Mockito.when(clienteDAO.buscarCliente("012365474123")).thenReturn(c1);
+		assertEquals(clienteDAO.buscarCliente("012365474123").getNome(), c1.getNome() );
+		
 	}
 	
 }
